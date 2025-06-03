@@ -1,0 +1,314 @@
+:root {
+    --primary-color: #d4af37;    /* Royal gold */
+    --secondary-color: #8b0f55;  /* Deep burgundy */
+    --background-color: #fff;
+    --text-color: #333;
+    --accent-color: #f8e7c9;     /* Light gold */
+    --font-primary: 'Playfair Display', serif;
+    --font-secondary: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-secondary);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#musicToggle {
+    background: var(--primary-color);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: white;
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+}
+
+#musicToggle:hover {
+    transform: scale(1.1);
+}
+
+.hidden {
+    display: none;
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url('/wedding-bg.jpg') center/cover;
+    color: white;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23d4af37"><path d="M0 0 Q 50 100 100 0 Z"/></svg>') repeat-x;
+    background-size: 50px;
+    opacity: 0.3;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23d4af37"><path d="M0 100 Q 50 0 100 100 Z"/></svg>') repeat-x;
+    background-size: 50px;
+    opacity: 0.3;
+}
+
+.main-title {
+    font-family: var(--font-primary);
+    font-size: 4.5rem;
+    margin-bottom: 1rem;
+    animation: fadeIn 2s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.main-title::before,
+.main-title::after {
+    content: '❦';
+    font-size: 2rem;
+    color: var(--primary-color);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.main-title::before {
+    left: -3rem;
+}
+
+.main-title::after {
+    right: -3rem;
+}
+
+.details {
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: var(--accent-color);
+    position: relative;
+}
+
+.details::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(45deg, var(--primary-color) 25%, transparent 25%) -50px 0,
+                linear-gradient(-45deg, var(--primary-color) 25%, transparent 25%) -50px 0;
+    background-size: 100px 100px;
+    opacity: 0.2;
+}
+
+.date-time h2 {
+    font-family: var(--font-primary);
+    color: var(--secondary-color);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.date-time h2::before,
+.date-time h2::after {
+    content: '•';
+    color: var(--primary-color);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+}
+
+.date-time h2::before {
+    left: -2rem;
+}
+
+.date-time h2::after {
+    right: -2rem;
+}
+
+.map-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background-color: var(--secondary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.map-button:hover {
+    transform: translateY(-2px);
+    background-color: transparent;
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.rsvp-form {
+    padding: 4rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+footer {
+    padding: 4rem 2rem;
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(45deg, var(--primary-color) 25%, transparent 25%) -50px 0,
+                linear-gradient(-45deg, var(--primary-color) 25%, transparent 25%) -50px 0;
+    background-size: 100px 100px;
+    opacity: 0.2;
+}
+
+.blessing {
+    font-family: var(--font-primary);
+    font-style: italic;
+    line-height: 2;
+    position: relative;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.blessing::before,
+.blessing::after {
+    content: '"';
+    font-size: 4rem;
+    color: var(--primary-color);
+    position: absolute;
+    opacity: 0.3;
+}
+
+.blessing::before {
+    top: 0;
+    left: 0;
+}
+
+.blessing::after {
+    bottom: 0;
+    right: 0;
+}
+
+/* Notification styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    background-color: #4caf50;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.notification.error {
+    background-color: #f44336;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .invitation-text {
+        font-size: 1.2rem;
+    }
+    
+    .date-time h2 {
+        font-size: 2rem;
+    }
+} 

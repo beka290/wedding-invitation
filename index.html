@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Манас & Жайна - Үйлену тойына шақыру</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="music-control">
+        <button id="musicToggle" onclick="toggleMusic()">
+            <span class="play-icon">▶</span>
+            <span class="pause-icon hidden">⏸</span>
+        </button>
+        <audio id="bgMusic" loop>
+            <source src="/wedding-music.mp3" type="audio/mp3">
+        </audio>
+    </div>
+
+    <header class="hero">
+        <h1 class="main-title">Манас & Жайна</h1>
+        <p class="invitation-text">ҮЙЛЕНУ ТОЙЫНА ШАҚЫРАМЫЗ</p>
+    </header>
+
+    <section class="details">
+        <div class="date-time">
+            <h2>23.06.2025</h2>
+            <p>Сағат 18:00-де басталады</p>
+        </div>
+
+        <div class="venue">
+            <h2>"Portofino" мейрамханасы</h2>
+            <p class="location-note">Жетуге ыңғайлы болу үшін төмендегі 2ГИС сілтемесін қолданыңыз:</p>
+            <a href="#" class="map-button">Картадан көру</a>
+        </div>
+
+        <div class="hosts">
+            <p>Той иелері:</p>
+            <h3>Темірлан мен Саяжаннын</h3>
+            <p>Жанабай - Зина</p>
+        </div>
+    </section>
+
+    <section class="rsvp-form">
+        <h2>Тойға қатысу сауалнамасы</h2>
+        <form id="rsvpForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="name">Аты-жөніңізді жазыңыз:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Тойға келесіз бе?</label>
+                <div class="radio-group">
+                    <input type="radio" id="yes" name="attendance" value="yes" required>
+                    <label for="yes">Иә, әрине келемін</label>
+                    
+                    <input type="radio" id="withPartner" name="attendance" value="withPartner">
+                    <label for="withPartner">Жұбайыммен келемін</label>
+                    
+                    <input type="radio" id="no" name="attendance" value="no">
+                    <label for="no">Өкінішке орай, келе алмаймын</label>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">Жіберу</button>
+        </form>
+    </section>
+
+    <footer>
+        <p class="blessing">
+            БҮГІН ТАҒЫ АТА-ДӘСТҮР ЖАЛҒАСТЫ,<br>
+            БАСТАЛМАҚШЫ ҚҰТТЫ ҚАДАМ АЛҒАШҚЫ.<br>
+            ҚОЛ ҰСТАСЫП ОТАУ ТІККЕН ҚОС БОТА,<br>
+            КӨПШІЛІКТІҢ АҚ БАТАСЫН АЛМАҚШЫ!
+        </p>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+</html> 
