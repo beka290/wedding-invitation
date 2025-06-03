@@ -3,78 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Манас & Жайна - Үйлену тойына шақыру</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>Үйлену тойына шақыру</title>
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="music-control">
-        <button id="musicToggle" onclick="toggleMusic()">
-            <span class="play-icon">▶</span>
-            <span class="pause-icon hidden">⏸</span>
+        <button id="musicToggle">
+            <i class="fas fa-music"></i>
+            <span class="play-text">Музыканы қосу</span>
         </button>
-        <audio id="bgMusic" loop>
-            <source src="/wedding-music.mp3" type="audio/mp3">
-        </audio>
+        <div id="player" style="display: none;"></div>
     </div>
 
     <header class="hero">
-        <h1 class="main-title">Манас & Жайна</h1>
-        <p class="invitation-text">ҮЙЛЕНУ ТОЙЫНА ШАҚЫРАМЫЗ</p>
+        <div class="hero-content">
+            <h1 class="names">Олжас & Азиза</h1>
+            <p class="date">22.08.2025</p>
+            <div class="divider">
+                <span class="line"></span>
+                <i class="fas fa-heart"></i>
+                <span class="line"></span>
+            </div>
+            <p class="invitation-text">Біздің үйлену тойымызға шақырамыз</p>
+        </div>
     </header>
 
-    <section class="details">
-        <div class="date-time">
-            <h2>23.06.2025</h2>
-            <p>Сағат 18:00-де басталады</p>
-        </div>
-
-        <div class="venue">
-            <h2>"Portofino" мейрамханасы</h2>
-            <p class="location-note">Жетуге ыңғайлы болу үшін төмендегі 2ГИС сілтемесін қолданыңыз:</p>
-            <a href="#" class="map-button">Картадан көру</a>
-        </div>
-
-        <div class="hosts">
-            <p>Той иелері:</p>
-            <h3>Темірлан мен Саяжаннын</h3>
-            <p>Жанабай - Зина</p>
-        </div>
-    </section>
-
-    <section class="rsvp-form">
-        <h2>Тойға қатысу сауалнамасы</h2>
-        <form id="rsvpForm" onsubmit="handleSubmit(event)">
-            <div class="form-group">
-                <label for="name">Аты-жөніңізді жазыңыз:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label>Тойға келесіз бе?</label>
-                <div class="radio-group">
-                    <input type="radio" id="yes" name="attendance" value="yes" required>
-                    <label for="yes">Иә, әрине келемін</label>
-                    
-                    <input type="radio" id="withPartner" name="attendance" value="withPartner">
-                    <label for="withPartner">Жұбайыммен келемін</label>
-                    
-                    <input type="radio" id="no" name="attendance" value="no">
-                    <label for="no">Өкінішке орай, келе алмаймын</label>
+    <main>
+        <section class="countdown" id="countdown">
+            <h2>Тойға дейін қалған уақыт</h2>
+            <div class="countdown-timer">
+                <div class="countdown-item">
+                    <span id="days">00</span>
+                    <span class="label">күн</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="hours">00</span>
+                    <span class="label">сағат</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="minutes">00</span>
+                    <span class="label">минут</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="seconds">00</span>
+                    <span class="label">секунд</span>
                 </div>
             </div>
-            <button type="submit" class="submit-btn">Жіберу</button>
-        </form>
-    </section>
+        </section>
+
+        <section class="details">
+            <div class="detail-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>Күні мен уақыты</h3>
+                <p>22 тамыз, 2025</p>
+                <p>17:00</p>
+            </div>
+            <div class="detail-card">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Мекен-жайы</h3>
+                <p>"Ақ Сарай" мейрамханасы</p>
+                <p>Абай даңғылы, 150</p>
+                <button class="map-btn">Картадан көру</button>
+            </div>
+            <div class="detail-card">
+                <i class="fas fa-phone-alt"></i>
+                <h3>Байланыс</h3>
+                <p>+7 (777) 123-45-67</p>
+                <p>+7 (777) 765-43-21</p>
+            </div>
+        </section>
+
+        <section class="rsvp" id="rsvp">
+            <h2>Тойға қатысу туралы растау</h2>
+            <form id="rsvpForm">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Аты-жөніңіз" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="phone" name="phone" placeholder="Телефон нөіріңіз" required>
+                </div>
+                <div class="form-group">
+                    <select id="attendance" name="attendance" required>
+                        <option value="" disabled selected>Қатысасыз ба?</option>
+                        <option value="yes">Иә, қатысамын</option>
+                        <option value="no">Жоқ, қатыса алмаймын</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="number" id="guests" name="guests" placeholder="Қонақтар саны" min="1" required>
+                </div>
+                <button type="submit">Жіберу</button>
+            </form>
+        </section>
+
+        <section class="wishes">
+            <div class="wish-text">
+                <h2>Құрметті қонақтар!</h2>
+                <p>
+                    Сіздерді біздің өміріміздегі ең маңызды күнді 
+                    бізбен бірге тойлауға шақырамыз. 
+                    Сіздердің қатысуларыңыз біз үшін үлкен қуаныш!
+                </p>
+            </div>
+        </section>
+    </main>
 
     <footer>
-        <p class="blessing">
-            БҮГІН ТАҒЫ АТА-ДӘСТҮР ЖАЛҒАСТЫ,<br>
-            БАСТАЛМАҚШЫ ҚҰТТЫ ҚАДАМ АЛҒАШҚЫ.<br>
-            ҚОЛ ҰСТАСЫП ОТАУ ТІККЕН ҚОС БОТА,<br>
-            КӨПШІЛІКТІҢ АҚ БАТАСЫН АЛМАҚШЫ!
-        </p>
+        <div class="footer-content">
+            <p class="names">Олжас & Азиза</p>
+            <p class="date">22.08.2025</p>
+        </div>
     </footer>
 
-    <script src="/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html> 

@@ -1,107 +1,133 @@
-// Music player functionality
-const musicToggle = document.getElementById('musicToggle');
-const bgMusic = document.getElementById('bgMusic');
-const playIcon = document.querySelector('.play-icon');
-const pauseIcon = document.querySelector('.pause-icon');
+document.addEventListener('DOMContentLoaded', function() {
+    // YouTube API Setup
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-function toggleMusic() {
-    if (bgMusic.paused) {
-        bgMusic.play();
-        playIcon.classList.add('hidden');
-        pauseIcon.classList.remove('hidden');
-    } else {
-        bgMusic.pause();
-        playIcon.classList.remove('hidden');
-        pauseIcon.classList.add('hidden');
+    let player;
+    let isPlaying = false;
+
+    window.onYouTubeIframeAPIReady = function() {
+        player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            videoId: '10unE1mT07w',
+            playerVars: {
+                'autoplay': 0,
+                'controls': 0,
+                'showinfo': 0,
+                'modestbranding': 1,
+                'loop': 1,
+                'playlist': '10unE1mT07w',
+                'fs': 0,
+                'cc_load_policy': 0,
+                'iv_load_policy': 3,
+                'autohide': 0
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
     }
-}
 
-// Form submission handling
-function handleSubmit(event) {
-    event.preventDefault();
-    
-    const submitBtn = document.querySelector('.submit-btn');
-    const originalBtnText = submitBtn.textContent;
-    submitBtn.textContent = 'Жіберілуде...';
-    submitBtn.disabled = true;
+    function onPlayerReady(event) {
+        const musicToggle = document.getElementById('musicToggle');
+        const playText = musicToggle.querySelector('.play-text');
+        
+        musicToggle.addEventListener('click', function() {
+            if (!isPlaying) {
+                event.target.playVideo();
+                playText.textContent = 'Музыканы өшіру';
+                musicToggle.classList.add('playing');
+                isPlaying = true;
+            } else {
+                event.target.pauseVideo();
+                playText.textContent = 'Музыканы қосу';
+                musicToggle.classList.remove('playing');
+                isPlaying = false;
+            }
+        });
+    }
 
-    const name = document.getElementById('name').value;
-    const attendance = document.querySelector('input[name="attendance"]:checked').value;
-    
-    // Show success message
-    showNotification('Рахмет! Жауабыңыз сәтті жіберілді.', 'success');
-    event.target.reset();
-    
-    // Send notification to Telegram (optional)
-    const message = `Новый ответ:\nИмя: ${name}\nПрисутствие: ${attendance}`;
-    const telegramBotToken = 'YOUR_BOT_TOKEN'; // Замените на ваш токен
-    const chatId = 'YOUR_CHAT_ID'; // Замените на ваш ID чата
-    
-    fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`)
-        .catch(error => console.error('Error:', error));
-    
-    submitBtn.textContent = originalBtnText;
-    submitBtn.disabled = false;
-}
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+            player.playVideo();
+        }
+    }
 
-// Notification system
-function showNotification(message, type) {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Trigger animation
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 100);
-    
-    // Remove notification after 3 seconds
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 3000);
-}
+    // Countdown Timer
+    const weddingDate = new Date('2024-07-15T17:00:00').getTime();
 
-// Smooth scroll for navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').textContent = String(days).padStart(2, '0');
+        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+        if (distance < 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('countdown').innerHTML = '<h2>Той басталды!</h2>';
+        }
+    }
+
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Form Handling
+    const rsvpForm = document.getElementById('rsvpForm');
+    
+    rsvpForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
+        
+        const formData = {
+            name: document.getElementById('name').value,
+            phone: document.getElementById('phone').value,
+            attendance: document.getElementById('attendance').value,
+            guests: document.getElementById('guests').value
+        };
+
+        // Here you would typically send the form data to a server
+        console.log('Form submitted:', formData);
+        
+        // Show success message
+        alert('Рахмет! Сіздің жауабыңыз қабылданды.');
+        rsvpForm.reset();
+    });
+
+    // Smooth Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
                 behavior: 'smooth'
             });
-        }
+        });
     });
-});
 
-// Add animation on scroll
-const animateOnScroll = () => {
-    const elements = document.querySelectorAll('.date-time, .venue, .hosts, .rsvp-form');
-    
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
+    // Animation on Scroll
+    function revealOnScroll() {
+        const elements = document.querySelectorAll('.detail-card, .countdown-item, .wish-text');
         
-        if (elementTop < windowHeight - 100) {
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-        }
-    });
-};
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            
+            if (elementTop < windowHeight - 100) {
+                element.classList.add('visible');
+            }
+        });
+    }
 
-// Initial styles for animation
-document.querySelectorAll('.date-time, .venue, .hosts, .rsvp-form').forEach(element => {
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(20px)';
-    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-});
-
-// Listen for scroll events
-window.addEventListener('scroll', animateOnScroll);
-// Initial check for elements in view
-window.addEventListener('load', animateOnScroll); 
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+}); 
